@@ -7,42 +7,61 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Mono:wght@400;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <canvas id="particles"></canvas>
+    <canvas id="dots"></canvas>
 
-    <div class="page" id="home">
+    <main class="page" id="home">
       <div class="center-content">
-        <h1 class="name">Seckin Bulgur</h1>
-        <div class="title-line"></div>
-        <p class="description">
-          I’m a .NET and C# developer with a strong backend focus. I design APIs
-          and work with SQL, but I’m also comfortable with frontend and mobile with React and Flutter. I enjoy,
-          allowing me to build features end-to-end. I started in backend
-          development and gradually expanded into full-stack, which changed how
-          I approach problems. I value simplicity and clarity in code. To me,
-          good software is easy for others to understand, maintain, and improve.
-        </p>
+        <p class="arcade-insert">INSERT COIN</p>
+
+        <h1 class="name">SECKIN BULGUR</h1>
+
+        <div class="maze-line">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="pacman"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+
+        <div class="info-card">
+          <p class="description">
+            .NET & C# developer with strong backend focus. API design, SQL,
+            plus React & Flutter. Building features end-to-end. I value
+            simplicity and clarity in code.
+          </p>
+        </div>
+
+        <div class="tech-stack">
+          <span class="tag">.NET</span>
+          <span class="tag">C#</span>
+          <span class="tag">SQL</span>
+          <span class="tag">React</span>
+          <span class="tag">Flutter</span>
+        </div>
 
         <a href="contact.html" class="btn">
-          <span>Contact</span>
+          <span>CONTACT</span>
           <svg
-            width="20"
-            height="20"
+            width="16"
+            height="16"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
+            stroke-width="3"
           >
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
         </a>
       </div>
-    </div>
+    </main>
 
     <script src="script.js"></script>
   </body>

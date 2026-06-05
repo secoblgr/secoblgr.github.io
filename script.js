@@ -1,87 +1,101 @@
-// ===== Particle System =====
-const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
-let particles = [];
-let mouse = { x: null, y: null };
+// ===== Arcade Dot Grid Background =====
+const canvas = document.getElementById("dots");
+const ctx = canvas.getContext("2d");
+let dots = [];
+let frame = 0;
 
 function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 }
 resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
+window.addEventListener("resize", resizeCanvas);
 
-window.addEventListener('mousemove', (e) => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
-});
+const spacing = 40;
 
-class Particle {
-    constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2 + 0.5;
-        this.speedX = (Math.random() - 0.5) * 0.4;
-        this.speedY = (Math.random() - 0.5) * 0.4;
-        this.opacity = Math.random() * 0.5 + 0.1;
-    }
+class Dot {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.baseSize = 2;
+    this.maxSize = 5;
+    this.size = this.baseSize;
+    this.phase = Math.random() * Math.PI * 2;
+  }
 
-    update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
+  update(time) {
+    const pulse = Math.sin(time * 0.003 + this.phase);
+    this.size =
+      this.baseSize +
+      (pulse + 1) * 0.5 * (this.maxSize - this.baseSize);
+  }
 
-        if (mouse.x !== null) {
-            const dx = mouse.x - this.x;
-            const dy = mouse.y - this.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 120) {
-                const force = (120 - dist) / 120;
-                this.x -= (dx / dist) * force * 1.5;
-                this.y -= (dy / dist) * force * 1.5;
-            }
-        }
-
-        if (this.x < 0) this.x = canvas.width;
-        if (this.x > canvas.width) this.x = 0;
-        if (this.y < 0) this.y = canvas.height;
-        if (this.y > canvas.height) this.y = 0;
-    }
-
-    draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(108, 99, 255, ${this.opacity})`;
-        ctx.fill();
-    }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(244, 185, 176, ${
+      0.3 + (this.size / this.maxSize) * 0.4
+    })`;
+    ctx.fill();
+  }
 }
 
-const count = Math.min(70, Math.floor((window.innerWidth * window.innerHeight) / 16000));
-for (let i = 0; i < count; i++) {
-    particles.push(new Particle());
-}
-
-function drawLines() {
-    for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-            const dx = particles[i].x - particles[j].x;
-            const dy = particles[i].y - particles[j].y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 140) {
-                ctx.beginPath();
-                ctx.moveTo(particles[i].x, particles[i].y);
-                ctx.lineTo(particles[j].x, particles[j].y);
-                ctx.strokeStyle = `rgba(108, 99, 255, ${(1 - dist / 140) * 0.12})`;
-                ctx.lineWidth = 0.5;
-                ctx.stroke();
-            }
-        }
+function initDots() {
+  dots = [];
+  const cols = Math.ceil(canvas.width / spacing) + 1;
+  const rows = Math.ceil(canvas.height / spacing) + 1;
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      dots.push(new Dot(c * spacing, r * spacing));
     }
+  }
+}
+initDots();
+window.addEventListener("resize", initDots);
+
+// Draw Pac-Man that moves across screen
+let pacmanX = -30;
+let pacmanSpeed = 2;
+let pacmanRow = 0;
+
+function drawPacman(x, y) {
+  const size = 12;
+  const mouthOpen = Math.abs(Math.sin(frame * 0.1)) * 0.3 + 0.05;
+
+  ctx.save();
+  ctx.translate(x, y);
+
+  ctx.beginPath();
+  ctx.arc(0, 0, size, mouthOpen * Math.PI, (2 - mouthOpen) * Math.PI);
+  ctx.lineTo(0, 0);
+  ctx.closePath();
+  ctx.fillStyle = "#D97706";
+  ctx.fill();
+
+  ctx.restore();
 }
 
 function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(p => { p.update(); p.draw(); });
-    drawLines();
-    requestAnimationFrame(animate);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  frame++;
+
+  // Draw grid dots
+  dots.forEach((d) => {
+    d.update(frame);
+    d.draw();
+  });
+
+  // Draw wandering Pacman across random rows
+  const totalRows = Math.floor(canvas.height / spacing);
+  const rowY = (pacmanRow % totalRows) * spacing + spacing / 2;
+  drawPacman(pacmanX, rowY);
+  pacmanX += pacmanSpeed;
+
+  if (pacmanX > canvas.width + 30) {
+    pacmanX = -30;
+    pacmanRow = Math.floor(Math.random() * totalRows);
+  }
+
+  requestAnimationFrame(animate);
 }
 animate();
