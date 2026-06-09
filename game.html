@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pac-Man | Seckin Bulgur</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body style="overflow: hidden; background: #000;">
+    <a href="index.html" class="back-link">
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="3"
+      >
+        <path d="M19 12H5M12 19l-7-7 7-7" />
+      </svg>
+      <span>BACK</span>
+    </a>
+
+    <div class="game-hud">
+      <span id="hud-score">SCORE 0</span>
+      <span id="hud-lives">LIVES 3</span>
+      <span id="hud-level">LEVEL 1</span>
+    </div>
+
+    <canvas id="game"></canvas>
+
+    <script src="game.js"></script>
+  </body>
+</html>

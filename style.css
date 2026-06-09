@@ -319,6 +319,34 @@ body {
   outline-offset: 4px;
 }
 
+/* ===== Play Button ===== */
+.play-btn {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  color: var(--surface);
+  background: var(--secondary);
+  border: 3px solid var(--secondary);
+  text-decoration: none;
+  transition: var(--transition);
+  opacity: 0;
+  animation: fadeUp 0.5s ease forwards 0.1s;
+}
+
+.play-btn:hover {
+  background: transparent;
+  color: var(--secondary);
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0px var(--secondary);
+}
+
 /* ===== Contact Page ===== */
 .back-link {
   position: fixed;
@@ -440,6 +468,24 @@ body {
     opacity: 1;
     animation: none;
   }
+}
+
+/* ===== Game Page HUD ===== */
+.game-hud {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  gap: 32px;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  color: var(--text);
+  pointer-events: none;
+  text-shadow: 2px 2px 0 var(--primary);
+  opacity: 0;
+  animation: fadeUp 0.5s ease forwards 0.1s;
 }
 
 /* ===== Responsive ===== */
