@@ -5,7 +5,7 @@ const ctx = canvas.getContext('2d');
 // ===== Game Constants =====
 let CELL_SIZE = 24;
 const PACMAN_SPEED = 0.10;
-const GHOST_SPEED_BASE = 0.055;
+const GHOST_SPEED_BASE = 0.068;
 const FRIGHTENED_TIME = 600;
 const GHOST_RESPAWN = { x: 10, y: 9 };
 
@@ -81,10 +81,10 @@ let ghosts = [];
 
 function initGhosts() {
   ghosts = [
-    { x: 9,  y: 1,  px: 0, py: 0, dir: { dx: 0, dy: 1 },  color: '#dc2626', type: 'blinky', eaten: false, name: 'BLINKY' },
-    { x: 1,  y: 10, px: 0, py: 0, dir: { dx: 1, dy: 0 },  color: '#f4b9b0', type: 'pinky',  eaten: false, name: 'PINKY' },
-    { x: 17, y: 10, px: 0, py: 0, dir: { dx: -1, dy: 0 }, color: '#00ffff', type: 'inky',   eaten: false, name: 'INKY' },
-    { x: 9,  y: 19, px: 0, py: 0, dir: { dx: 0, dy: -1 }, color: '#d97706', type: 'clyde',  eaten: false, name: 'CLYDE' },
+    { x: 9,  y: 1,  px: 0, py: 0, dir: { dx: 0, dy: 1 },  color: '#dc2626', type: 'blinky', eaten: false, deadTimer: 0, name: 'BLINKY' },
+    { x: 1,  y: 10, px: 0, py: 0, dir: { dx: 1, dy: 0 },  color: '#f4b9b0', type: 'pinky',  eaten: false, deadTimer: 0, name: 'PINKY' },
+    { x: 17, y: 10, px: 0, py: 0, dir: { dx: -1, dy: 0 }, color: '#00ffff', type: 'inky',   eaten: false, deadTimer: 0, name: 'INKY' },
+    { x: 9,  y: 19, px: 0, py: 0, dir: { dx: 0, dy: -1 }, color: '#d97706', type: 'clyde',  eaten: false, deadTimer: 0, name: 'CLYDE' },
   ];
   ghosts.forEach(g => { g.px = g.x; g.py = g.y; });
 }
@@ -292,7 +292,21 @@ function updatePacman() {
 }
 
 function updateGhost(ghost) {
-  const speed = ghost.eaten ? getGhostSpeed() * 1.4 : getGhostSpeed();
+  // Eaten ghost waits at respawn before reviving
+  if (ghost.eaten) {
+    if (ghost.deadTimer > 0) {
+      ghost.deadTimer--;
+      return;
+    }
+    ghost.eaten = false;
+    ghost.x = GHOST_RESPAWN.x;
+    ghost.y = GHOST_RESPAWN.y;
+    ghost.px = ghost.x;
+    ghost.py = ghost.y;
+    return;
+  }
+
+  const speed = getGhostSpeed();
 
   const cx = ghost.x + 0.5;
   const cy = ghost.y + 0.5;
@@ -305,7 +319,7 @@ function updateGhost(ghost) {
     ghost.py = ghost.y;
 
     let chosenDir;
-    if (frightenedMode && !ghost.eaten) {
+    if (frightenedMode) {
       const valid = DIRS.filter(d => !(d.dx === -ghost.dir.dx && d.dy === -ghost.dir.dy))
                         .filter(d => !isWall(ghost.x + d.dx, ghost.y + d.dy));
       if (valid.length === 0) {
@@ -327,10 +341,6 @@ function updateGhost(ghost) {
     ghost.dir = chosenDir;
     ghost.x += ghost.dir.dx;
     ghost.y += ghost.dir.dy;
-
-    if (ghost.eaten && ghost.x === GHOST_RESPAWN.x && ghost.y === GHOST_RESPAWN.y) {
-      ghost.eaten = false;
-    }
   }
 
   ghost.px += ghost.dir.dx * speed;
@@ -386,6 +396,11 @@ function checkCollisions() {
     if (dist < 0.75) {
       if (frightenedMode && !g.eaten) {
         g.eaten = true;
+        g.deadTimer = 120; // 2 seconds @ 60fps
+        g.x = GHOST_RESPAWN.x;
+        g.y = GHOST_RESPAWN.y;
+        g.px = g.x;
+        g.py = g.y;
         score += 200;
       } else if (!g.eaten) {
         loseLife();
@@ -496,6 +511,7 @@ function drawGhost(ghost) {
   const r = CELL_SIZE * 0.38;
 
   if (ghost.eaten) {
+    if (ghost.deadTimer > 0) return; // completely hidden while respawning
     drawGhostEyes(cx, cy, r, ghost.dir, true);
     return;
   }
