@@ -3,74 +3,202 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Seckin Bulgur</title>
+
+    <!-- ===== Canonical URL ===== -->
+    <link rel="canonical" href="https://seckinbulgur.com/" />
+
+    <!-- ===== Primary Meta Tags ===== -->
+    <title>Seçkin Bulgur | .NET & C# Developer Portfolio</title>
+    <meta name="title" content="Seçkin Bulgur | .NET & C# Developer Portfolio" />
+    <meta name="description" content="Seçkin Bulgur - .NET & C# geliştirici. Backend odaklı yazılım mühendisi. API tasarımı, SQL, React ve Flutter ile uçtan uca projeler geliştiriyorum." />
+    <meta name="keywords" content="Seçkin Bulgur, Seckin Bulgur, .NET Developer, C# Developer, Backend Developer, Yazılım Mühendisi, Software Engineer, Portfolio, Kişisel Website, API Design, SQL, React, Flutter" />
+    <meta name="author" content="Seçkin Bulgur" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="bingbot" content="index, follow" />
+    <meta name="language" content="Turkish" />
+    <meta name="revisit-after" content="7 days" />
+    <meta name="distribution" content="global" />
+    <meta name="rating" content="general" />
+    <meta name="theme-color" content="#2a3fe5" />
+    <meta name="msapplication-TileColor" content="#2a3fe5" />
+
+    <!-- ===== Open Graph / Facebook ===== -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://seckinbulgur.com/" />
+    <meta property="og:title" content="Seçkin Bulgur | .NET & C# Developer Portfolio" />
+    <meta property="og:description" content="Seçkin Bulgur - .NET & C# geliştirici. Backend odaklı yazılım mühendisi. API tasarımı, SQL, React ve Flutter ile uçtan uca projeler geliştiriyorum." />
+    <meta property="og:site_name" content="Seçkin Bulgur Portfolio" />
+    <meta property="og:locale" content="tr_TR" />
+    <meta property="og:image" content="https://seckinbulgur.com/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Seçkin Bulgur - .NET & C# Developer Portfolio" />
+
+    <!-- ===== Twitter ===== -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://seckinbulgur.com/" />
+    <meta property="twitter:title" content="Seçkin Bulgur | .NET & C# Developer Portfolio" />
+    <meta property="twitter:description" content="Seçkin Bulgur - .NET & C# geliştirici. Backend odaklı yazılım mühendisi. API tasarımı, SQL, React ve Flutter ile uçtan uca projeler geliştiriyorum." />
+    <meta property="twitter:image" content="https://seckinbulgur.com/og-image.jpg" />
+    <meta property="twitter:image:alt" content="Seçkin Bulgur - .NET & C# Developer Portfolio" />
+
+    <!-- ===== Structured Data: Person ===== -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Seçkin Bulgur",
+      "alternateName": "Seckin Bulgur",
+      "url": "https://seckinbulgur.com",
+      "image": "https://seckinbulgur.com/og-image.jpg",
+      "jobTitle": ".NET & C# Developer",
+      "description": ".NET & C# geliştirici. Backend odaklı yazılım mühendisi. API tasarımı, SQL, React ve Flutter ile uçtan uca projeler geliştiriyorum.",
+      "knowsAbout": [".NET", "C#", "SQL", "React", "Flutter", "API Design", "Backend Development", "Software Engineering"],
+      "sameAs": [
+        "https://github.com/secoblgr",
+        "https://www.linkedin.com/in/seckinbulgur/",
+        "https://seckinbulgur.com"
+      ],
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Freelance"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "TR"
+      }
+    }
+    </script>
+
+    <!-- ===== Structured Data: WebSite ===== -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Seçkin Bulgur Portfolio",
+      "alternateName": "Seckin Bulgur Portfolio",
+      "url": "https://seckinbulgur.com",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://seckinbulgur.com/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    <!-- ===== Structured Data: CreativeWork (Portfolio) ===== -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "name": "Seçkin Bulgur Portfolio",
+      "creator": {
+        "@type": "Person",
+        "name": "Seçkin Bulgur"
+      },
+      "description": "Seçkin Bulgur'un kişisel portfolio websitesi. .NET, C#, SQL, React ve Flutter projeleri.",
+      "url": "https://seckinbulgur.com",
+      "keywords": [".NET", "C#", "SQL", "React", "Flutter", "Backend", "API"]
+    }
+    </script>
+
+    <!-- ===== Favicon & Icons ===== -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👾</text></svg>" />
+
+    <!-- ===== Fonts ===== -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Mono:wght@400;700&display=swap"
       rel="stylesheet"
     />
+
+    <!-- ===== Stylesheet ===== -->
     <link rel="stylesheet" href="style.css" />
+
+    <!-- ===== Preload Critical Resources ===== -->
+    <link rel="preload" href="style.css" as="style" />
+    <link rel="preload" href="script.js" as="script" />
   </head>
   <body>
-    <canvas id="dots"></canvas>
+    <!-- Background Canvas -->
+    <canvas id="dots" aria-hidden="true"></canvas>
 
-    <a href="game.html" class="play-btn">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-        <polygon points="5 3 19 12 5 21 5 3"/>
-      </svg>
-      <span>PLAY</span>
-    </a>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Ana içeriğe atla</a>
 
-    <main class="page" id="home">
+    <!-- Navigation -->
+    <nav class="top-nav" aria-label="Ana navigasyon">
+      <a href="game.html" class="play-btn" aria-label="Pac-Man oyununu oyna">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <polygon points="5 3 19 12 5 21 5 3"/>
+        </svg>
+        <span>PLAY</span>
+      </a>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="page" id="main-content" role="main">
       <div class="center-content">
-        <br />
-        <p class="arcade-insert">INSERT COIN</p>
+        <!-- Hero Section -->
+        <section class="hero-section" aria-labelledby="name-heading">
+          <p class="arcade-insert">INSERT COIN</p>
 
-        <h1 class="name">SECKIN BULGUR</h1>
-        <br>
-        <br>
-        <!-- <div class="maze-line">
-          <span class="dot"></span>
-          <span class="dot"></span>
-          <span class="dot"></span>
-          <span class="pacman"></span>
-          <span class="dot"></span>
-          <span class="dot"></span>
-          <span class="dot"></span>
-        </div> -->
+          <h1 id="name-heading" class="name">
+            <span class="visually-hidden">Seçkin Bulgur - </span>
+            SECKIN BULGUR
+          </h1>
 
-        <div class="info-card">
-          <p class="description">
-            .NET & C# developer with strong backend focus. API design, SQL,
-            plus React & Flutter. Building features end-to-end. I value
-            simplicity and clarity in clean code.
-          </p>
-        </div>
+          <p class="job-title">Full Stack Developer</p>
+          <br />
 
-        <div class="tech-stack">
-          <span class="tag">.NET</span>
-          <span class="tag">C#</span>
-          <span class="tag">SQL</span>
-          <span class="tag">React</span>
-          <span class="tag">Flutter</span>
-        </div>
+        </section>
 
-        <a href="contact.html" class="btn">
-          <span>CONTACT</span>
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="3"
-          >
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
-        </a>
+        <!-- About Section -->
+        <section class="about-section" aria-labelledby="about-heading">
+          <h2 id="about-heading" class="visually-hidden">Hakkımda</h2>
+          <div class="info-card">
+            <p class="description">
+              .NET & C# developer with strong backend focus. API design, SQL, plus React & Flutter. Building features end-to-end. I value simplicity and clarity in clean code.
+            </p>
+          </div>
+        </section>
+
+        <!-- Tech Stack Section -->
+        <section class="tech-section" aria-labelledby="tech-heading">
+          <h2 id="tech-heading" class="visually-hidden">Teknoloji Yığınım</h2>
+          <div class="tech-stack" role="list">
+            <span class="tag" role="listitem">.NET</span>
+            <span class="tag" role="listitem">C#</span>
+            <span class="tag" role="listitem">SQL</span>
+            <span class="tag" role="listitem">React</span>
+            <span class="tag" role="listitem">Flutter</span>
+            <span class="tag" role="listitem">API Design</span>
+            <span class="tag" role="listitem">Backend</span>
+          </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section" aria-label="İletişim bölümü">
+          <a href="contact.html" class="btn" aria-label="Seçkin Bulgur ile iletişime geç">
+            <span>CONTACT</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
+        </section>
       </div>
     </main>
+
+    <!-- Footer -->
+    <footer class="site-footer" role="contentinfo">
+      <p class="footer-text">
+        <span>&copy; 2025 Seçkin BULGUR</span>
+        <span class="footer-separator">|</span>
+        <span>Tüm hakları saklıdır.</span>
+      </p>
+    </footer>
 
     <script src="script.js"></script>
   </body>
