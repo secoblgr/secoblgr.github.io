@@ -2,10 +2,8 @@ User-agent: *
 Allow: /
 Allow: /index.html
 Allow: /contact.html
-Allow: /game.html
 Allow: /style.css
 Allow: /script.js
-Allow: /game.js
 Allow: /cv.pdf
 
 Disallow: /.git/

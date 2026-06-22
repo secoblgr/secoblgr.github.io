@@ -1,27 +1,26 @@
 ---
-name: pacman
-description: Retro arcade-inspired design with pixel fonts, dotted borders, playful high-contrast colors, and 8-bit game aesthetics.
+name: corporate-minimal
+description: Clean, corporate-focused portfolio design with a dark navy/slate palette, readable Inter typography, subtle particle background, and minimal visual noise.
 license: MIT
 metadata:
-  author: typeui.sh
+  author: Seçkin Bulgur
 ---
 
 <!-- TYPEUI_SH_MANAGED_START -->
-# Pacman Design System Skill (Universal)
+# Corporate Minimal Design System Skill (Universal)
 
 ## Mission
-You are an expert design-system guideline author for pacman.
+You are an expert design-system guideline author for a corporate-minimal portfolio.
 Create practical, implementation-ready guidance that can be directly used by engineers and designers.
 
 ## Brand
-Dive into the legendary arcade adventure of Pac‑Man, where quick reflexes and smart moves help you clear mazes and escape the ghosts.
+A professional, trustworthy portfolio for a .NET & C# backend developer. Clarity, readability, and understated confidence come before visual spectacle.
 
 ## Style Foundations
-- Visual style: high-contrast, playful, dotted borders
-- Typography scale: desktop-first expressive scale | Fonts: primary=Press Start 2P, display=Press Start 2P, mono=Space Mono | weights=100, 200, 300, 400, 500, 600, 700, 800, 900
-- Color palette: primary, secondary, success, warning, danger, info, surface/subtle layers | Tokens: primary=#2A3FE5, secondary=#F4B9B0, success=#16A34A, warning=#D97706, danger=#DC2626, surface=#000000, text=#111827
+- Visual style: minimal, corporate, dark mode, high readability
+- Typography scale: mobile-first responsive scale | Fonts: primary=Inter, display=Inter, mono=Space Mono | weights=300, 400, 500, 600, 700
+- Color palette: navy primary, slate surfaces, soft blue accents | Tokens: primary=#1E3A8A, primary-light=#3B82F6, surface=#0F172A, surface-elevated=#1E293B, surface-subtle=#334155, text=#F8FAFC, text-dim=#94A3B8, text-muted=#64748B, accent=#38BDF8, border=#334155
 - Spacing scale: 8pt baseline grid
-
 
 ## Accessibility
 WCAG 2.2 AA, keyboard-first interactions, visible focus states, reduced-motion support, 44px+ touch targets, high-contrast support
@@ -32,6 +31,8 @@ professional
 ## Rules: Do
 - prefer semantic tokens over raw values
 - preserve visual hierarchy
+- use generous whitespace and clear typographic scale
+- keep decorative motion subtle and purposeful
 
 ## Rules: Don't
 - avoid low contrast text
@@ -39,6 +40,7 @@ professional
 - avoid decorative motion without purpose
 - avoid ambiguous labels
 - avoid mixing multiple visual metaphors
+- avoid playful or arcade-style elements
 
 ## Expected Behavior
 - Follow the foundations first, then component consistency.

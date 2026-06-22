@@ -1,7 +1,7 @@
-// ===== Arcade Dot Grid Background =====
+// ===== Subtle Particle Network Background =====
 const canvas = document.getElementById("dots");
 const ctx = canvas.getContext("2d");
-let dots = [];
+let particles = [];
 let frame = 0;
 
 function resizeCanvas() {
@@ -11,91 +11,100 @@ function resizeCanvas() {
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
 
-const spacing = 40;
+const particleCount = Math.min(60, Math.floor((window.innerWidth * window.innerHeight) / 25000));
+const connectionDistance = 120;
+const maxConnections = 3;
 
-class Dot {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-    this.baseSize = 2;
-    this.maxSize = 5;
-    this.size = this.baseSize;
-    this.phase = Math.random() * Math.PI * 2;
+class Particle {
+  constructor() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.vx = (Math.random() - 0.5) * 0.3;
+    this.vy = (Math.random() - 0.5) * 0.3;
+    this.size = Math.random() * 1.5 + 1;
+    this.opacity = Math.random() * 0.35 + 0.25;
   }
 
-  update(time) {
-    const pulse = Math.sin(time * 0.003 + this.phase);
-    this.size =
-      this.baseSize +
-      (pulse + 1) * 0.5 * (this.maxSize - this.baseSize);
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+
+    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
   }
 
   draw() {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(244, 185, 176, ${
-      0.3 + (this.size / this.maxSize) * 0.4
-    })`;
+    ctx.fillStyle = `rgba(148, 163, 184, ${this.opacity})`;
     ctx.fill();
   }
 }
 
-function initDots() {
-  dots = [];
-  const cols = Math.ceil(canvas.width / spacing) + 1;
-  const rows = Math.ceil(canvas.height / spacing) + 1;
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      dots.push(new Dot(c * spacing, r * spacing));
-    }
+function initParticles() {
+  particles = [];
+  const count = Math.min(60, Math.floor((canvas.width * canvas.height) / 25000));
+  for (let i = 0; i < count; i++) {
+    particles.push(new Particle());
   }
 }
-initDots();
-window.addEventListener("resize", initDots);
+initParticles();
+window.addEventListener("resize", initParticles);
 
-// Draw Pac-Man that moves across screen
-let pacmanX = -30;
-let pacmanSpeed = 2;
-let pacmanRow = 0;
+function drawConnections() {
+  for (let i = 0; i < particles.length; i++) {
+    let connections = 0;
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
 
-function drawPacman(x, y) {
-  const size = 12;
-  const mouthOpen = Math.abs(Math.sin(frame * 0.1)) * 0.3 + 0.05;
-
-  ctx.save();
-  ctx.translate(x, y);
-
-  ctx.beginPath();
-  ctx.arc(0, 0, size, mouthOpen * Math.PI, (2 - mouthOpen) * Math.PI);
-  ctx.lineTo(0, 0);
-  ctx.closePath();
-  ctx.fillStyle = "#D97706";
-  ctx.fill();
-
-  ctx.restore();
+      if (distance < connectionDistance && connections < maxConnections) {
+        const opacity = (1 - distance / connectionDistance) * 0.15;
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = `rgba(148, 163, 184, ${opacity})`;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+        connections++;
+      }
+    }
+  }
 }
 
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   frame++;
 
-  // Draw grid dots
-  dots.forEach((d) => {
-    d.update(frame);
-    d.draw();
+  particles.forEach((particle) => {
+    particle.update();
+    particle.draw();
   });
 
-  // Draw wandering Pacman across random rows
-  const totalRows = Math.floor(canvas.height / spacing);
-  const rowY = (pacmanRow % totalRows) * spacing + spacing / 2;
-  drawPacman(pacmanX, rowY);
-  pacmanX += pacmanSpeed;
-
-  if (pacmanX > canvas.width + 30) {
-    pacmanX = -30;
-    pacmanRow = Math.floor(Math.random() * totalRows);
-  }
+  drawConnections();
 
   requestAnimationFrame(animate);
 }
 animate();
+
+// ===== Name Text Reveal Animation =====
+function initNameAnimation() {
+  const nameElement = document.querySelector(".name-visible");
+  if (!nameElement) return;
+
+  const text = nameElement.textContent;
+  nameElement.textContent = "";
+  nameElement.setAttribute("aria-hidden", "true");
+
+  const chars = text.split("");
+  chars.forEach((char, index) => {
+    const span = document.createElement("span");
+    span.className = "name-char";
+    span.textContent = char === " " ? "\u00A0" : char;
+    span.style.animationDelay = `${0.25 + index * 0.04}s`;
+    nameElement.appendChild(span);
+  });
+}
+
+initNameAnimation();

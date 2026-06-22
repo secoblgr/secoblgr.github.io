@@ -1,55 +1,64 @@
 ---
-name: Pacman
+name: Corporate Minimal
 colors:
-  primary: "#2A3FE5"
-  secondary: "#F4B9B0"
-  success: "#16A34A"
-  warning: "#D97706"
-  danger: "#DC2626"
-  surface: "#000000"
-  text: "#111827"
-  neutral: "#000000"
+  primary: "#1E3A8A"
+  primary-light: "#3B82F6"
+  surface: "#0F172A"
+  surface-elevated: "#1E293B"
+  surface-subtle: "#334155"
+  text: "#F8FAFC"
+  text-dim: "#94A3B8"
+  text-muted: "#64748B"
+  accent: "#38BDF8"
+  border: "#334155"
 typography:
   h1:
-    fontFamily: "Press Start 2P"
-    fontSize: 3rem
+    fontFamily: "Inter"
+    fontSize: 4.5rem
+    fontWeight: 700
   body-md:
-    fontFamily: "Press Start 2P"
-    fontSize: 1rem
+    fontFamily: "Inter"
+    fontSize: 1.05rem
+    fontWeight: 400
   label-caps:
     fontFamily: "Space Mono"
-    fontSize: 0.75rem
-  sourceScale: "desktop-first expressive scale"
-  weights: "100, 200, 300, 400, 500, 600, 700, 800, 900"
+    fontSize: 0.7rem
+    fontWeight: 700
+  sourceScale: "mobile-first responsive scale"
+  weights: "300, 400, 500, 600, 700"
 rounded:
-  sm: 4px
-  md: 8px
+  sm: 6px
+  md: 12px
+  lg: 16px
 spacing:
   sm: 8px
   md: 16px
+  lg: 32px
   sourceScale: "8pt baseline grid"
 ---
 
 ## Overview
 
-Retro arcade-inspired design with pixel fonts, dotted borders, playful high-contrast colors, and 8-bit game aesthetics.
+Clean, corporate-focused portfolio design with a dark navy/slate palette, readable sans-serif typography, and subtle particle background. Optimized for professional .NET/C# backend developer positioning.
 
 ## Style Foundations
 
-- **Visual style:** high-contrast, playful, dotted borders
-- **Typography scale:** desktop-first expressive scale
-- **Typography fonts:** primary=Press Start 2P, display=Press Start 2P, mono=Space Mono
-- **Typography weights:** 100, 200, 300, 400, 500, 600, 700, 800, 900
-- **Color palette:** primary, secondary, success, warning, danger, info, surface/subtle layers
+- **Visual style:** minimal, corporate, dark mode, high readability
+- **Typography scale:** mobile-first responsive scale
+- **Typography fonts:** primary=Inter, display=Inter, mono=Space Mono
+- **Typography weights:** 300, 400, 500, 600, 700
+- **Color palette:** navy primary, slate surfaces, soft blue accents
 - **Spacing scale:** 8pt baseline grid
 
 ## Colors
 
-- **Primary (#2A3FE5):** Token from style foundations.
-- **Secondary (#F4B9B0):** Token from style foundations.
-- **Success (#16A34A):** Token from style foundations.
-- **Warning (#D97706):** Token from style foundations.
-- **Danger (#DC2626):** Token from style foundations.
-- **Surface (#000000):** Token from style foundations.
-- **Text (#111827):** Token from style foundations.
-- **Neutral (#000000):** Derived from the surface token for official format compatibility.
+- **Primary (#1E3A8A):** Deep navy for buttons, labels, and primary accents.
+- **Primary Light (#3B82F6):** Hover states and subtle glows.
+- **Surface (#0F172A):** Main dark background.
+- **Surface Elevated (#1E293B):** Cards, tags, and elevated surfaces.
+- **Surface Subtle (#334155):** Borders and dividers.
+- **Text (#F8FAFC):** Primary text color.
+- **Text Dim (#94A3B8):** Secondary text and descriptions.
+- **Text Muted (#64748B):** Footer and tertiary text.
+- **Accent (#38BDF8):** Soft blue highlight for interactive states.
+- **Border (#334155):** Subtle borders for cards and tags.
