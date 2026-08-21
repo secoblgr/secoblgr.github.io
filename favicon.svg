@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Seckin Bulgur logo">
+  <defs>
+    <linearGradient id="bgGradient" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0d1522"/>
+      <stop offset="100%" stop-color="#05070d"/>
+    </linearGradient>
+    <linearGradient id="accentGradient" x1="64" y1="64" x2="448" y2="448" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1e3a8a"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="18" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- App icon background -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGradient)"/>
+  <rect width="512" height="512" rx="112" fill="none" stroke="rgba(148, 163, 184, 0.14)" stroke-width="4"/>
+
+  <!-- Gradient accent orb -->
+  <circle cx="352" cy="160" r="96" fill="url(#accentGradient)" opacity="0.22" filter="url(#glow)"/>
+  <circle cx="352" cy="160" r="64" fill="url(#accentGradient)" opacity="0.35"/>
+
+  <!-- Monogram -->
+  <text
+    x="256"
+    y="330"
+    font-family="Inter, Arial, Helvetica, sans-serif"
+    font-size="220"
+    font-weight="700"
+    font-style="italic"
+    fill="#f8fafc"
+    text-anchor="middle"
+    letter-spacing="-0.04em"
+  >SB</text>
+
+  <!-- Subtle underline accent -->
+  <rect x="126" y="358" width="260" height="10" rx="5" fill="#38bdf8" opacity="0.85"/>
+</svg>
