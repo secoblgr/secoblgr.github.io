@@ -1,7 +1,6 @@
 User-agent: *
 Allow: /
 Allow: /index.html
-Allow: /contact.html
 Allow: /style.css
 Allow: /script.js
 Allow: /cv.pdf
