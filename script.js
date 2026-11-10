@@ -3,6 +3,8 @@ const translations = {
     "brand.firstName": "SEÇKİN",
     "brand.name": "SEÇKİN BULGUR",
     "brand.footer": "SEÇKİN<br>BULGUR<span>®</span>",
+    "seo.title": "Seçkin Bulgur | Software Developer",
+    "seo.description": "ASP.NET Core, Flutter ve React ile temiz, ölçeklenebilir ve kullanıcı odaklı web ve mobil uygulamalar geliştiren yazılım geliştiricisi.",
     "a11y.skip": "İçeriğe geç",
     "a11y.home": "Seçkin Bulgur — Anasayfa",
     "a11y.hero": "Seçkin Bulgur, Yazılım Geliştirici",
@@ -94,6 +96,8 @@ const translations = {
     "brand.firstName": "SECKIN",
     "brand.name": "SECKIN BULGUR",
     "brand.footer": "SECKIN<br>BULGUR<span>®</span>",
+    "seo.title": "Seckin Bulgur | Software Developer",
+    "seo.description": "Software developer building clean, scalable and user-centered web and mobile applications with ASP.NET Core, Flutter and React.",
     "a11y.skip": "Skip to content",
     "a11y.home": "Seckin Bulgur — Home",
     "a11y.hero": "Seckin Bulgur, Software Developer",
@@ -196,18 +200,39 @@ let lastFocused = null;
 let isMobile = mobileQuery.matches;
 let heroTimers = [];
 
+const requestedLang = new URLSearchParams(window.location.search).get("lang");
+
 try {
   const savedLang = localStorage.getItem("lang");
-  if (savedLang === "tr" || savedLang === "en") currentLang = savedLang;
+  if (requestedLang === "tr" || requestedLang === "en") currentLang = requestedLang;
+  else if (savedLang === "tr" || savedLang === "en") currentLang = savedLang;
 } catch (error) {
-  currentLang = "tr";
+  currentLang = requestedLang === "en" ? "en" : "tr";
 }
 
-function applyLang(lang) {
+function applyLang(lang, updateUrl = false) {
   if (!translations[lang]) return;
   currentLang = lang;
   document.documentElement.lang = lang;
-  document.title = lang === "tr" ? "Seçkin Bulgur | Software Developer" : "Seckin Bulgur | Software Developer";
+  document.title = translations[lang]["seo.title"];
+  const description = translations[lang]["seo.description"];
+  const localizedUrl = lang === "en" ? "https://seckinbulgur.com/?lang=en" : "https://seckinbulgur.com/";
+  document.querySelector('meta[name="title"]').content = translations[lang]["seo.title"];
+  document.querySelector('meta[name="description"]').content = description;
+  document.querySelector('meta[property="og:title"]').content = translations[lang]["seo.title"];
+  document.querySelector('meta[property="og:description"]').content = description;
+  document.querySelector('meta[property="twitter:title"]').content = translations[lang]["seo.title"];
+  document.querySelector('meta[property="twitter:description"]').content = description;
+  document.querySelector('meta[property="og:url"]').content = localizedUrl;
+  document.querySelector('meta[property="twitter:url"]').content = localizedUrl;
+  document.querySelector('meta[property="og:locale"]').content = lang === "en" ? "en_US" : "tr_TR";
+  document.querySelector('link[rel="canonical"]').href = localizedUrl;
+  if (updateUrl) {
+    const url = new URL(window.location.href);
+    if (lang === "en") url.searchParams.set("lang", "en");
+    else url.searchParams.delete("lang");
+    window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+  }
   document.querySelectorAll("[data-i18n]").forEach((element) => {
     const value = translations[lang][element.dataset.i18n];
     if (value === undefined) return;
@@ -431,7 +456,7 @@ function trapDrawerFocus(event) {
   }
 }
 
-document.querySelectorAll(".lang-btn").forEach((button) => button.addEventListener("click", () => applyLang(button.dataset.lang)));
+document.querySelectorAll(".lang-btn").forEach((button) => button.addEventListener("click", () => applyLang(button.dataset.lang, true)));
 menuToggle.addEventListener("click", () => menu.classList.contains("is-open") ? closeMenu() : openMenu());
 document.querySelectorAll("[data-open-contact]").forEach((button) => button.addEventListener("click", openContact));
 document.querySelectorAll("[data-close-contact]").forEach((button) => button.addEventListener("click", () => closeContact()));
