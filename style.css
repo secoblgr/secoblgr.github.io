@@ -1521,7 +1521,7 @@ a:focus-visible {
   flex-direction: column;
   gap: 12px;
   font-family: var(--font-display);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -1542,7 +1542,7 @@ a:focus-visible {
   padding-bottom: 12px;
   border-bottom: 1px solid var(--black);
   font-family: var(--font-display);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
 }
 
@@ -1559,9 +1559,13 @@ a:focus-visible {
   padding-top: 22px;
   border-top: 1px solid rgba(17, 17, 17, .25);
   font-family: var(--font-display);
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 600;
   letter-spacing: .08em;
+}
+
+.site-footer .social-links {
+  font-size: 11px;
 }
 
 .site-footer .social-links a:hover {
@@ -1818,7 +1822,7 @@ a:focus-visible {
   .site-footer { padding: 60px 20px 25px; border-radius: 40px 0 0; }
   .footer-top { min-height: 390px; grid-template-columns: 1fr 1fr; gap: 50px 20px; }
   .footer-brand { grid-column: 1 / -1; font-size: 21vw; }
-  .footer-nav { font-size: 10px; }
+  .footer-nav { font-size: 12px; }
   .page-top { align-self: start; }
   .footer-bottom { align-items: flex-start; flex-direction: column; }
   .footer-bottom > span:nth-child(2) { display: none; }

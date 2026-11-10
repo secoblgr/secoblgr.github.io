@@ -482,5 +482,4 @@ initProjectObserver();
 initServiceObserver();
 initScrollAnimations();
 initMagnetic();
-document.getElementById("year").textContent = new Date().getFullYear();
 document.querySelector(".menu-year").textContent = new Date().getFullYear();
