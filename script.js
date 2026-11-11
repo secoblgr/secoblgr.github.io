@@ -84,7 +84,7 @@ const translations = {
     "contact.code": "KOD",
     "contact.marquee": "BİRLİKTE ÇALIŞALIM",
     "footer.top": "YUKARI DÖN",
-    "footer.made": "İSTANBUL'DA TASARLANDI & KODLANDI",
+    "footer.made": "DESIGNED & DEVELOPED BY SEÇKİN BULGUR · 2025",
     "footer.visitors": "Toplam ziyaretçi",
     "drawer.label": "İLETİŞİM / 06",
     "drawer.kicker": "MERHABA DE",
@@ -178,7 +178,7 @@ const translations = {
     "contact.code": "CODE",
     "contact.marquee": "LET'S WORK TOGETHER",
     "footer.top": "PAGE TOP",
-    "footer.made": "DESIGNED & DEVELOPED IN ISTANBUL",
+    "footer.made": "DESIGNED & DEVELOPED BY SECKIN BULGUR · 2025",
     "footer.visitors": "Total visitors",
     "drawer.label": "CONTACT / 06",
     "drawer.kicker": "SAY HELLO",
@@ -283,7 +283,8 @@ async function fetchVisitorCount(increment = false) {
   const controller = new AbortController();
   const timeout = window.setTimeout(() => controller.abort(), 8000);
   try {
-    const response = await fetch(`${visitorCounterApi}${increment ? "/up" : "/"}`, {
+    // The trailing-slash read URL redirects without CORS headers.
+    const response = await fetch(increment ? `${visitorCounterApi}/up` : visitorCounterApi, {
       headers: { Accept: "application/json" },
       cache: "no-store",
       credentials: "omit",
@@ -344,10 +345,9 @@ async function initVisitorCounter() {
     } catch (error) {
       storageAvailable = false;
     }
-    visitorCounterElement.classList.remove("is-unavailable");
     renderVisitorCount();
   } catch (error) {
-    if (cachedCount === 0) visitorCounterElement.classList.add("is-unavailable");
+    if (cachedCount === 0 && visitorCountElement) visitorCountElement.textContent = "—";
   } finally {
     visitorCounterElement.setAttribute("aria-busy", "false");
   }
