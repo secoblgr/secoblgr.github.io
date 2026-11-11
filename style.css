@@ -1564,6 +1564,26 @@ a:focus-visible {
   letter-spacing: .08em;
 }
 
+.visitor-counter {
+  display: inline-flex;
+  min-width: 48px;
+  align-items: center;
+  gap: 7px;
+  color: var(--black);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.visitor-counter svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.visitor-counter.is-unavailable {
+  display: none;
+}
+
 .site-footer .social-links {
   font-size: 11px;
 }

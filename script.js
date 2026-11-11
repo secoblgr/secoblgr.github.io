@@ -85,6 +85,7 @@ const translations = {
     "contact.marquee": "BİRLİKTE ÇALIŞALIM",
     "footer.top": "YUKARI DÖN",
     "footer.made": "İSTANBUL'DA TASARLANDI & KODLANDI",
+    "footer.visitors": "Toplam ziyaretçi",
     "drawer.label": "İLETİŞİM / 06",
     "drawer.kicker": "MERHABA DE",
     "drawer.title": "Konuşmaya<br>değer<span>.</span>",
@@ -178,6 +179,7 @@ const translations = {
     "contact.marquee": "LET'S WORK TOGETHER",
     "footer.top": "PAGE TOP",
     "footer.made": "DESIGNED & DEVELOPED IN ISTANBUL",
+    "footer.visitors": "Total visitors",
     "drawer.label": "CONTACT / 06",
     "drawer.kicker": "SAY HELLO",
     "drawer.title": "Worth<br>a talk<span>.</span>",
@@ -195,7 +197,13 @@ const menu = document.querySelector(".site-menu");
 const menuToggle = document.querySelector(".menu-toggle");
 const drawer = document.querySelector(".contact-drawer");
 const drawerBackdrop = document.querySelector(".drawer-backdrop");
+const visitorCounterElement = document.getElementById("visitor-counter");
+const visitorCountElement = document.getElementById("visitor-count");
+const visitorCounterApi = "https://api.counterapi.dev/v2/sb-counter/first-counter-6199";
+const visitorCountedKey = "portfolio:visitor-counted:v1";
+const visitorCachedCountKey = "portfolio:visitor-count:v1";
 let currentLang = "tr";
+let visitorCount = null;
 let lastFocused = null;
 let isMobile = mobileQuery.matches;
 let heroTimers = [];
@@ -253,10 +261,95 @@ function applyLang(lang, updateUrl = false) {
     button.classList.toggle("active", active);
     button.setAttribute("aria-pressed", String(active));
   });
+  renderVisitorCount();
   try {
     localStorage.setItem("lang", lang);
   } catch (error) {
     return;
+  }
+}
+
+function renderVisitorCount() {
+  if (!visitorCounterElement || !visitorCountElement) return;
+  const label = translations[currentLang]["footer.visitors"];
+  visitorCounterElement.title = label;
+  if (visitorCount === null) return;
+  const formattedCount = new Intl.NumberFormat(currentLang === "en" ? "en-US" : "tr-TR").format(visitorCount);
+  visitorCountElement.textContent = formattedCount;
+  visitorCounterElement.setAttribute("aria-label", `${label}: ${formattedCount}`);
+}
+
+async function fetchVisitorCount(increment = false) {
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), 8000);
+  try {
+    const response = await fetch(`${visitorCounterApi}${increment ? "/up" : "/"}`, {
+      headers: { Accept: "application/json" },
+      cache: "no-store",
+      credentials: "omit",
+      signal: controller.signal
+    });
+    if (!response.ok) throw new Error(`Visitor counter request failed: ${response.status}`);
+    const payload = await response.json();
+    const upCount = Number(payload?.data?.up_count);
+    const downCount = Number(payload?.data?.down_count);
+    if (!Number.isFinite(upCount) || !Number.isFinite(downCount)) throw new Error("Visitor counter response is invalid");
+    return Math.max(0, upCount - downCount);
+  } finally {
+    window.clearTimeout(timeout);
+  }
+}
+
+async function initVisitorCounter() {
+  if (!visitorCounterElement) return;
+  let storageAvailable = true;
+  let hasCounted = false;
+  let cachedCount = 0;
+  try {
+    hasCounted = localStorage.getItem(visitorCountedKey) !== null;
+    const storedCount = Number(localStorage.getItem(visitorCachedCountKey));
+    cachedCount = Number.isFinite(storedCount) && storedCount > 0 ? storedCount : 0;
+  } catch (error) {
+    storageAvailable = false;
+  }
+  if (cachedCount > 0) {
+    visitorCount = cachedCount;
+    renderVisitorCount();
+  }
+  try {
+    const currentCount = await fetchVisitorCount();
+    let nextCount = currentCount;
+    const isProduction = ["seckinbulgur.com", "www.seckinbulgur.com"].includes(window.location.hostname);
+    // Without persistent storage, read only instead of inflating the count on every reload.
+    if (isProduction && storageAvailable && !hasCounted) {
+      try {
+        // Claim the visit before the request so simultaneous tabs cannot increment twice.
+        localStorage.setItem(visitorCountedKey, "pending");
+        const updatedCount = await fetchVisitorCount(true);
+        // CounterAPI can briefly return a buffered value after an increment.
+        nextCount = Math.max(updatedCount, currentCount + 1);
+        localStorage.setItem(visitorCountedKey, "1");
+      } catch (error) {
+        nextCount = currentCount;
+        try {
+          localStorage.removeItem(visitorCountedKey);
+        } catch (error) {
+          storageAvailable = false;
+        }
+      }
+    }
+    visitorCount = Math.max(nextCount, cachedCount);
+    try {
+      localStorage.setItem(visitorCachedCountKey, String(visitorCount));
+    } catch (error) {
+      storageAvailable = false;
+    }
+    visitorCounterElement.classList.remove("is-unavailable");
+    renderVisitorCount();
+  } catch (error) {
+    if (cachedCount === 0) visitorCounterElement.classList.add("is-unavailable");
+  } finally {
+    visitorCounterElement.setAttribute("aria-busy", "false");
   }
 }
 
@@ -476,6 +569,7 @@ mobileQuery.addEventListener("change", (event) => {
 });
 
 applyLang(currentLang);
+initVisitorCounter();
 buildHeroGrid();
 initLoader();
 initProjectObserver();
